@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Cycle Game</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+
+        header {
+            background-color: #4caf50;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .diagram {
+            position: relative;
+            margin: 2rem auto;
+            width: 80%;
+        }
+
+        .diagram img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .info-box {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            background: #eef7e9;
+            border: 1px solid #4caf50;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .stage {
+            position: absolute;
+            font-size: 1rem;
+            padding: 0.5rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #sun {
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: sun-shine 4s infinite;
+        }
+
+        #evaporation {
+            bottom: 10%;
+            left: 25%;
+            animation: rise-up 5s infinite alternate;
+        }
+
+        #condensation {
+            top: 15%;
+            left: 70%;
+            animation: float-cloud 5s infinite alternate;
+        }
+
+        #precipitation {
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fall-down 3s infinite alternate;
+        }
+
+        #collection {
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: ripple 4s infinite;
+        }
+
+        @keyframes sun-shine {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes rise-up {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-30px); }
+        }
+
+        @keyframes float-cloud {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-30px); }
+        }
+
+        @keyframes fall-down {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(30px); }
+        }
+
+        @keyframes ripple {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Water Cycle Game</h1>
+</header>
+
+<div class="container">
+    <p>Click on the different stages of the water cycle to learn more!</p>
+
+    <div class="diagram">
+        <!-- Water Cycle Diagram -->
+        <img src="https://via.placeholder.com/800x400" alt="Water Cycle Diagram">
+        
+        <!-- Interactive Points -->
+        <div id="sun" class="stage" onclick="showInfo('sun')">Sun ☀️</div>
+        <div id="evaporation" class="stage" onclick="showInfo('evaporation')">Evaporation</div>
+        <div id="condensation" class="stage" onclick="showInfo('condensation')">Condensation</div>
+        <div id="precipitation" class="stage" onclick="showInfo('precipitation')">Precipitation 🌧️</div>
+        <div id="collection" class="stage" onclick="showInfo('collection')">Collection</div>
+    </div>
+
+    <div class="info-box" id="info-box">
+        <p>Click on any stage to learn more about it!</p>
+    </div>
+</div>
+
+<script>
+    // Information about each stage of the water cycle
+    const waterCycleInfo = {
+        sun: "The sun heats up water from rivers, lakes, and oceans, providing energy for the water cycle.",
+        evaporation: "Evaporation is the process where water turns into vapor and rises into the atmosphere.",
+        condensation: "Condensation occurs when water vapor cools and turns into liquid droplets, forming clouds.",
+        precipitation: "Precipitation happens when water droplets in clouds combine to form rain, snow, or hail.",
+        collection: "Collection is the stage where water gathers in rivers, lakes, and oceans, restarting the cycle."
+    };
+
+    // Function to display information about a stage
+    function showInfo(stage) {
+        const infoBox = document.getElementById('info-box');
+        infoBox.innerHTML = `<p>${waterCycleInfo[stage]}</p>`;
+    }
+</script>
+
+</body>
+</html>

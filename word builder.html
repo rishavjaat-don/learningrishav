@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Builder Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .game-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .hint {
+      font-size: 16px;
+      color: #888;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Word Builder Game</h1>
+
+    <p><strong>Scrambled Word:</strong> aelpp</p>
+
+    <form action="#result" method="get">
+      <label for="word-input">Enter your guess:</label>
+      <input type="text" id="word-input" name="user-word" placeholder="Type your word" required>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div id="result" class="result">
+      <p><strong>Correct Word:</strong> apple</p>
+      <p><strong>Result:</strong> Oops! Try again. The correct word was "apple".</p>
+    </div>
+
+    <p class="hint">Hint: The word is a fruit.</p>
+  </div>
+</body>
+</html>

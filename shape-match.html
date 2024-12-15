@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shape Match Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4caf50;
+        }
+
+        .game-container {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .shape {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+
+        .circle {
+            background-color: #ff6f61;
+            border-radius: 50%;
+        }
+
+        .square {
+            background-color: #42a5f5;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid #ffb74d;
+        }
+
+        .answer-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .answer-button:hover {
+            background-color: #388e3c;
+        }
+
+        #result {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        #next-button {
+            background-color: #007bff;
+        }
+
+        #next-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Shape Match Game</h1>
+<div class="game-container">
+    <div id="shape-container" class="shape">
+        <!-- Shape will appear here -->
+    </div>
+
+    <div id="answers-container">
+        <!-- Answer buttons will appear here -->
+    </div>
+
+    <div id="result"></div>
+    <button id="next-button" style="display:none;" class="answer-button" onclick="nextShape()">Next Shape</button>
+</div>
+
+<script>
+    const shapes = [
+        { type: 'circle', name: 'Circle' },
+        { type: 'square', name: 'Square' },
+        { type: 'triangle', name: 'Triangle' }
+    ];
+
+    let currentShapeIndex = 0;
+    let score = 0;
+
+    function loadShape() {
+        const shapeObj = shapes[currentShapeIndex];
+
+        // Display the shape
+        const shapeContainer = document.getElementById('shape-container');
+        shapeContainer.className = `shape ${shapeObj.type}`;
+
+        // Shuffle the answers
+        const answers = shapes.map(s => s.name).sort(() => Math.random() - 0.5);
+
+        // Create answer buttons
+        const answerButtons = answers.map(answer => {
+            return `<button class="answer-button" onclick="checkAnswer('${answer}')">${answer}</button>`;
+        });
+
+        document.getElementById('answers-container').innerHTML = answerButtons.join('');
+    }
+
+    function checkAnswer(selectedAnswer) {
+        const correctAnswer = shapes[currentShapeIndex].name;
+        const resultContainer = document.getElementById('result');
+
+        if (selectedAnswer === correctAnswer) {
+            score++;
+            resultContainer.textContent = 'Correct!';
+        } else {
+            resultContainer.textContent = `Incorrect. The correct answer is ${correctAnswer}.`;
+        }
+
+        document.getElementById('next-button').style.display = 'inline-block';
+    }
+
+    function nextShape() {
+        currentShapeIndex++;
+        const resultContainer = document.getElementById('result');
+
+        if (currentShapeIndex < shapes.length) {
+            loadShape();
+            resultContainer.textContent = '';
+            document.getElementById('next-button').style.display = 'none';
+        } else {
+            document.querySelector('.game-container').innerHTML = `<h2>Game Over! Your score: ${score} / ${shapes.length}</h2>`;
+        }
+    }
+
+    // Load the first shape
+    loadShape();
+</script>
+
+</body>
+</html>

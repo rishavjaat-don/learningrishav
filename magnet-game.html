@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnet Adventure Quest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            text-align: center;
+            color: #004d40;
+            padding: 20px;
+        }
+        .game-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .game-area {
+            width: 800px;
+            height: 400px;
+            background-color: #cce7ff;
+            border: 2px solid #004d40;
+            position: relative;
+        }
+        .magnet-character {
+            width: 40px;
+            height: 40px;
+            background-color: #ff6347;
+            position: absolute;
+            top: 180px;
+            left: 50px;
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+        .metal-object {
+            width: 30px;
+            height: 30px;
+            background-color: #b8b8b8;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .obstacle {
+            width: 40px;
+            height: 40px;
+            background-color: #ff4500;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #004d40;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00796b;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Magnet Adventure Quest</h1>
+    <div class="game-container">
+        <div class="game-area">
+            <div class="magnet-character" id="magnetCharacter"></div>
+            <div class="metal-object" id="metalObject1" style="top: 100px; left: 500px;"></div>
+            <div class="metal-object" id="metalObject2" style="top: 250px; left: 650px;"></div>
+            <div class="obstacle" id="obstacle1" style="top: 200px; left: 300px;"></div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button onclick="startGame()">Start Game</button>
+        <button onclick="moveMagnet('north')">Move Up</button>
+        <button onclick="moveMagnet('south')">Move Down</button>
+        <button onclick="moveMagnet('east')">Move Right</button>
+        <button onclick="moveMagnet('west')">Move Left</button>
+    </div>
+
+    <script>
+        let magnetCharacter = document.getElementById('magnetCharacter');
+        let metalObject1 = document.getElementById('metalObject1');
+        let metalObject2 = document.getElementById('metalObject2');
+        let obstacle1 = document.getElementById('obstacle1');
+
+        let magnetX = 50, magnetY = 180;
+
+        let gameStarted = false;
+
+        function startGame() {
+            gameStarted = true;
+            document.querySelector('.button-container').style.display = 'block';
+            alert("Welcome to Magnet Adventure Quest! Use the arrows to move the magnet and collect the metal objects while avoiding obstacles!");
+        }
+
+        function moveMagnet(direction) {
+            if (!gameStarted) return;
+            
+            // Move the character based on direction
+            if (direction === 'north' && magnetY > 0) magnetY -= 10;
+            if (direction === 'south' && magnetY < 360) magnetY += 10;
+            if (direction === 'east' && magnetX < 760) magnetX += 10;
+            if (direction === 'west' && magnetX > 0) magnetX -= 10;
+
+            // Update the position of the character
+            magnetCharacter.style.top = magnetY + 'px';
+            magnetCharacter.style.left = magnetX + 'px';
+
+            // Check for collision with metal objects
+            checkCollision(metalObject1);
+            checkCollision(metalObject2);
+
+            // Check if the magnet hits an obstacle
+            if (checkObstacleCollision()) {
+                alert("Oh no! You hit an obstacle. Try again!");
+                resetGame();
+            }
+        }
+
+        function checkCollision(metalObject) {
+            let metalX = parseInt(metalObject.style.left);
+            let metalY = parseInt(metalObject.style.top);
+
+            // Magnet proximity range
+            if (Math.abs(magnetX - metalX) < 40 && Math.abs(magnetY - metalY) < 40) {
+                metalObject.style.backgroundColor = "#ffcc00"; // Change color to indicate collection
+                alert("You collected a metal object!");
+                resetMetalObject(metalObject);
+            }
+        }
+
+        function resetMetalObject(metalObject) {
+            // Reset the position of the collected object
+            let randomX = Math.floor(Math.random() * (750 - 50)) + 50;
+            let randomY = Math.floor(Math.random() * (350 - 50)) + 50;
+            metalObject.style.left = randomX + 'px';
+            metalObject.style.top = randomY + 'px';
+            metalObject.style.backgroundColor = "#b8b8b8"; // Reset color
+        }
+
+        function checkObstacleCollision() {
+            let obstacleX = parseInt(obstacle1.style.left);
+            let obstacleY = parseInt(obstacle1.style.top);
+
+            // Check if magnet collides with an obstacle
+            return Math.abs(magnetX - obstacleX) < 40 && Math.abs(magnetY - obstacleY) < 40;
+        }
+
+        function resetGame() {
+            magnetX = 50;
+            magnetY = 180;
+            magnetCharacter.style.left = magnetX + 'px';
+            magnetCharacter.style.top = magnetY + 'px';
+
+            // Reset obstacle and metal objects
+            resetMetalObject(metalObject1);
+            resetMetalObject(metalObject2);
+        }
+    </script>
+
+</body>
+</html>
